@@ -1,0 +1,35 @@
+# === REPOS DA FTD (não versionar — não são meus) ===
+fe-ftd-ionica-monolithic/
+lib-ftd-ionica-react_ions-facade/
+mfe-ftd-ionica_agenda/
+mfe-ftd-ionica_atividade/
+mfe-ftd-ionica_bancoquestao/
+mfe-ftd-ionica_login/
+mfe-ftd-ionica_mural/
+mfe-ftd-ionica_portal/
+mfe-ftd-ionica_sala/
+
+# === MATERIAL SENSÍVEL ===
+PRIVATE/
+DIARIO_REUNIOES/
+
+# === SNAPSHOTS (volume grande, valor baixo) ===
+SNAPSHOTS/
+
+# === DEPENDÊNCIAS / BUILD (caso aparecer) ===
+node_modules/
+dist/
+build/
+.next/
+out/
+
+# === ARQUIVOS DE SISTEMA ===
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+
+# === IDE ===
+.vscode/
+.idea/
+*.swp

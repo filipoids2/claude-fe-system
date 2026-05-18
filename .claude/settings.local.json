@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd D:\\\\local\\\\ftd\\\\ftd-frontend\\\\lib-ftd-ionica-react_ions-facade *)",
+      "Read(//d/local/ftd/ftd-backend/**)",
+      "Read(//d/local/ftd/ftd-migration/**)",
+      "Bash(grep -v -E '^\\\\.git$|^\\\\.$|^\\\\.\\\\.$')",
+      "Bash(git -C \"D:/local/ftd/ftd-backend/ts-ftd-ionica_sala\" branch -a)",
+      "Bash(git -C \"D:/local/ftd/ftd-backend/ts-ftd-ionica_sala\" log --oneline -5)",
+      "Bash(git -C \"D:/local/ftd/ftd-backend/api-ftd-ionica_sala\" branch -a)",
+      "Bash(cd *)",
+      "Bash([ -e \"D:/local/ftd/ftd-frontend/$p\" ])",
+      "Bash(awk '{print $NF, \"\\(\"$5\" bytes\\)\"}')",
+      "Bash(grep '\\\\.md$')"
+    ]
+  }
+}

@@ -8,6 +8,7 @@ mfe-ftd-ionica_login/
 mfe-ftd-ionica_mural/
 mfe-ftd-ionica_portal/
 mfe-ftd-ionica_sala/
+setup-ftd-ionica_frontend/
 
 # === MATERIAL SENSÍVEL ===
 PRIVATE/
@@ -36,3 +37,7 @@ Thumbs.db
 
 # === Claude CLI local config ===
 .claude/
+
+# === Setup local Rafa ===
+mfe/
+_old-clones/

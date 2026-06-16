@@ -10,13 +10,6 @@ mfe-ftd-ionica_portal/
 mfe-ftd-ionica_sala/
 setup-ftd-ionica_frontend/
 
-# === MATERIAL SENSÍVEL ===
-PRIVATE/
-DIARIO_REUNIOES/
-
-# === SNAPSHOTS (volume grande, valor baixo) ===
-SNAPSHOTS/
-
 # === DEPENDÊNCIAS / BUILD (caso aparecer) ===
 node_modules/
 dist/

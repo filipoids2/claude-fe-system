@@ -3,7 +3,7 @@
 > **Tipo:** feature
 > **PBI:** 181113 (a preencher)
 > **Branch:** feature/pbi-181113-dev
-> **Status:** em andamento — CA12-14 bloqueada por achado em PASSO 0
+> **Status:** CA06-14 implementadas — aguardando validação na tela (sala descartável)
 > **Início:** 2026-06-18
 > **Conclusão:** —
 
@@ -12,11 +12,10 @@
 ## 1. Resumo curto
 
 Implementação do botão "Excluir" na barra de organização do detalhe da
-aula. CA06/07 (botão visível com contador) e CA08-11 (modal de confirmação
-singular/plural com preservação da seleção ao cancelar) finalizadas. CA12-14
-(exclusão real em lote + loading + toast) **parada** após PASSO 0 revelar
-divergência de shape: endpoint quer `guid_conteudo` e a relação parent→conteúdo
-é 1:N.
+aula. CA06/07 (botão visível com contador), CA08-11 (modal de confirmação
+singular/plural com preservação da seleção ao cancelar) e CA12-14 (exclusão
+real em lote + loading + toast) implementadas. Aguardando validação manual
+em sala descartável antes de commit.
 
 ## 2. Problema / Objetivo
 
@@ -54,39 +53,45 @@ lote já existiam no projeto e precisavam ser conectados.
   em `selectedXxxIndices`. `resetAllCheckboxes` só roda no caminho de
   sucesso da API (caminho ainda não implementado).
 
-### Fatia 3 — CA12-14: exclusão real (BLOQUEADA)
+### Fatia 3 — CA12-14: exclusão real (IMPLEMENTADA)
 
-PASSO 0 (inspeção de shape antes de codar coleta) revelou:
+**Endpoint A CONFIRMADO** (TL + Swagger): `DELETE …/salas/{guidSala}/conteudos`,
+body `[{ guid_conteudo: string }]` — exclusão lógica (soft delete). Service
+`HomeAulas.deleteContent` (`services/HomeAula/HomeAula.tsx:321-324`) já
+existia e foi reaproveitado, sem criar service novo.
 
-- `IListaEstruturaConteudo` (parent — o que a barra seleciona) **não tem
-  `guid_conteudo`** direto. Expõe `guid_estrutura_aula` e
-  `guid_estrutura_aula_item` + `conteudos: IContentStructuredList[]`.
-- `guid_conteudo` mora **dentro de cada filho** em `conteudos[N].guid_conteudo`.
-- Relação parent : conteúdo é **1 : N**. Selecionar "1 material" pode
-  significar enviar N `guid_conteudo`.
+**Estratégia de coleta confirmada (a):** enviar TODOS os
+`conteudos[].guid_conteudo` de cada parent selecionado. Selecionar 1 card
+com N itens manda N guids. `qtdExcluir` continua contando CARDS (UX), o
+body do DELETE conta CONTEÚDOS achatados.
 
-Endpoint confirmado por Swagger: `DELETE …/salas/{guidSala}/conteudos`,
-body `[{ guid_conteudo }]`. Service pronto: `HomeAulas.deleteContent`
-(`services/HomeAula/HomeAula.tsx:321-324`).
+Mudanças aplicadas:
 
-Endpoint do single-item antigo (`HomeAulas.excluirConteudo`) **não** é o
-mesmo: bate em `/salas/{guidSala}/aulas` com `guid_estrutura_aula` — apaga
-a estrutura de aula inteira, não o conteúdo. Provavelmente cascateia.
-
-Parada pelo enunciado da task: "SE algum tipo NÃO expõe guid_conteudo
-diretamente: PARE, não implemente a coleta, e me reporte o shape real.
-Decidimos juntos."
-
-Decisões em aberto antes de retomar:
-
-- **Estratégia de coleta:** (a) enviar todos os `conteudos[].guid_conteudo`
-  de cada parent selecionado — qtdExcluir conta parents, body conta filhos;
-  (b) enviar só o primeiro filho de cada parent — risco de órfão; (c) trocar
-  para o endpoint `/aulas` com `guid_estrutura_aula` (igual ao single-item),
-  que aparentemente cascateia tudo.
-- **Confirmar com BFF/TL:** o backend trata `/conteudos` em lote como "apaga
-  exatamente esses N conteúdos" ou tem semântica de "apaga os parents que
-  contém esses conteúdos"?
+- **Conteudo.tsx (3 branches do botão):** desktop / mobile / tablet trocam
+  `card.guid_estrutura_aula` por flatten `card.conteudos.map(c => c.guid_conteudo)`.
+  Helper local `pushConteudoGuids(card)` em cada branch pra evitar duplicação.
+  Coleta inclui os 4 tipos (resources, documentsAndLinks, materialLivros,
+  atividades) — todos têm `conteudos[]` como confirmado pelo tipo
+  `StructuredContentWithEditing → IListaEstruturaConteudo`.
+- **HomeAula.tsx:** novo `sendExcluirSelecaoMultipla(guidsToDelete, qtdCards)`
+  clonado de `sendDesativarSelecaoMultipla`. Recebe `qtdCards` por arg (não
+  por state) pra desacoplar do timing do React. Chama
+  `HomeAulas.deleteContent(guidSala, body)`. Toast singular/plural usa
+  `qtdCards` (nº de CARDS, o que o usuário vê), não `guids.length`.
+- **Reset SÓ no sucesso:** `resetAllCheckboxes()` dentro do try.
+  Catch/finally NÃO resetam checkboxes — seleção preservada pra retry.
+  Finally limpa só state local (`selectedGuidsToDelete`, `qtdParaExcluir`),
+  fecha modal e desliga loading.
+- **Analytics:** usa `trackCallbackExcluirMaterialSucesso` /
+  `trackCallbackExcluirMaterialErro` (genéricos já existentes em
+  `useAnalyticsHomeAula.ts:1204,1218`). Não há track de erro em lote
+  específico — genéricos cobrem CA14.
+- **Bug latente registrado, não corrigido:** `HomeAula.tsx:532` faz
+  `atividades.some((at) => at.guid_conteudo === guidConteudo)` — acessa
+  `guid_conteudo` direto da atividade, divergindo do tipo (que só expõe
+  via `conteudos[N]`). TS aceitou pq `at.guid_conteudo` é opcional em
+  algum cast. Atividades têm `conteudos[]` como os outros 3 tipos
+  (confirmado em `AulaHomeSlice.tsx:55` — `activities: StructuredContentWithEditing[]`).
 
 ## 4. Arquivos alterados (até agora)
 
@@ -100,8 +105,13 @@ Decisões em aberto antes de retomar:
 | `src/components/organisms/Aulas/Conteudo.tsx:1572-1622`          | Botão Excluir tablet: mesma mudança, id `…-tablet`                                                                                 |
 | `src/components/pages/Aulas/HomeAula.tsx:48-53`                  | Import `ModalPropsExcluirConteudo`                                                                                                 |
 | `src/components/pages/Aulas/HomeAula.tsx:235`                    | State `selectedGuidsToDelete`                                                                                                      |
-| `src/components/pages/Aulas/HomeAula.tsx:861-877`                | Callback `toggleModalExcluirMaterial` (rightButtonAction ainda placeholder — só fecha)                                             |
-| `src/components/pages/Aulas/HomeAula.tsx:1459`                   | Prop passada ao `<Conteudo>`                                                                                                       |
+| `src/components/pages/Aulas/HomeAula.tsx:861-877`                | Callback `toggleModalExcluirMaterial` agora seta `qtdParaExcluir` e chama `sendExcluirSelecaoMultipla(selectedGuids, qtdExcluir)` |
+| `src/components/pages/Aulas/HomeAula.tsx:862-909`                | Novo `sendExcluirSelecaoMultipla` (clone de `sendDesativarSelecaoMultipla`, usa `HomeAulas.deleteContent`)                         |
+| `src/components/pages/Aulas/HomeAula.tsx:236`                    | Novo state `qtdParaExcluir` (controla singular/plural do toast)                                                                    |
+| `src/components/organisms/Aulas/Conteudo.tsx:1240-1276`          | Coleta flatten `card.conteudos.map(c => c.guid_conteudo)` no branch desktop (helper local `pushConteudoGuids`)                     |
+| `src/components/organisms/Aulas/Conteudo.tsx:1431-1448`          | Mesma coleta flatten no branch mobile                                                                                              |
+| `src/components/organisms/Aulas/Conteudo.tsx:1563-1580`          | Mesma coleta flatten no branch tablet                                                                                              |
+| `src/components/pages/Aulas/HomeAula.tsx:1459`                   | Prop passada ao `<Conteudo>` (sem mudança nesta fatia)                                                                              |
 
 ## 5. Como testar (fatias fechadas)
 
@@ -112,8 +122,13 @@ URL: `/salas/<guidSala>/aulas/<guidAula>` (tela de detalhe da aula).
 3. Clicar "Excluir" → modal abre com `id="modal-excluir-conteudo"`,
    título "Excluir material?" / "Excluir materiais?", `modalText2` vermelho.
 4. Cancelar / X / clicar fora → modal fecha, checkboxes permanecem marcados.
-5. Confirmar → **hoje só fecha** (placeholder). Exclusão real depende de
-   desbloqueio da fatia 3.
+5. Confirmar → loading full-page (texto "Salvando alterações..."),
+   `DELETE /sala/v1/escolas/{guidEscola}/salas/{guidSala}/conteudos` com
+   body `[{ guid_conteudo }]` achatado dos cards selecionados, toast
+   sucesso ("Material excluído!" / "Materiais excluídos!" — singular/plural
+   por nº de CARDS, não nº de conteúdos), refetch e checkboxes resetados.
+6. Forçar erro de rede → toast de erro singular/plural, modal fecha,
+   **checkboxes permanecem marcados** (CA13: reset só no sucesso).
 
 Inspecionar DOM: se `id="modal-excluir-aulas"` aparecer, é o fluxo de SALA
 (tela errada) — confirmar que está em HomeAula, não SalaProfessor.

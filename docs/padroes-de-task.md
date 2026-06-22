@@ -118,6 +118,48 @@ decide quais levar pro time vs quais responder sozinho.
 6. Iterar features
 7. Gerar TASK_LOG **detalhado** (esse é histórico arquitetural)
 
+### 3.5. Operações destrutivas (overlay sobre qualquer tipo)
+
+> **Não é um tipo de task à parte** — é uma camada extra que se soma a bug/
+> feature/refactor quando a task toca algo **irreversível para o usuário**.
+> Se a task é uma feature QUE EXCLUI dados, vale §3.2 **e** §3.5.
+
+**O que conta como destrutivo:**
+- DELETE / exclusão (lógica OU física)
+- Sobrescrita que não dá pra desfazer (overwrite sem histórico)
+- Transferência/movimentação que altera estado em outro sistema
+- Qualquer ação cujo "desfazer" não existe na UI
+
+**Por que tratamento próprio:** o custo do erro é assimétrico. Bug de layout
+você corrige no próximo deploy; DELETE no guid errado apaga dado de produção.
+Inferência forte ("deve ser esse endpoint") é barata em feature comum e
+perigosa aqui. (Aprendizado PBI-181113: o endpoint virou 3x antes de confirmar.)
+
+**Protocolo — antes de codar:**
+1. **Confirmar o contrato com o TL/BFF, não inferir.** Endpoint, body, e
+   SEMÂNTICA (o que o backend faz de fato — cascata? escopo? soft vs hard
+   delete?). Swagger/código não bastam quando há ambiguidade — PBI cola
+   endpoints de tasks irmãs (ver §3.2).
+2. **Paranoia útil:** formular a pergunta pra DESCARTAR a opção errada, não só
+   confirmar a preferida. "Confirma que NÃO é o endpoint X?" pega o que
+   "é o Y, né?" deixa passar.
+3. **Exclusão lógica ou física?** Lógica (soft delete) = reversível no banco,
+   testar é mais seguro. Física = irreversível, redobrar cuidado.
+
+**Protocolo — ao implementar:**
+4. **Contador e payload têm que bater.** Se a UI diz "Excluir (2)", o backend
+   recebe exatamente os 2 — nunca filtrar de um lado só. Fonte única de verdade
+   pro critério de elegibilidade (predicado nomeado, não regra inline repetida).
+5. **Testar em ambiente/registro descartável** — nunca em dado bom, mesmo com
+   soft delete.
+6. **Confirmação explícita do humano antes do irreversível de verdade.** O CLI/
+   IA não dispara DELETE real sozinho — para, mostra o que vai acontecer, espera
+   OK.
+
+**Validação:**
+7. Provar na tela que o destrutivo fez SÓ o esperado — e que o que NÃO devia ser
+   afetado sobreviveu (ex: material excluído de uma aula continua em outra).
+
 ## 4. Quando pedir ajuda do time
 
 Sinalizar bloqueio **cedo**, não tarde. Pedir ajuda em:

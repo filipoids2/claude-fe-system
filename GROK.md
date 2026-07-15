@@ -1,6 +1,6 @@
 # GROK.md — Global Context
 
-Arquivo principal para Grok (xAI). Sempre que eu mencionar "use GROK.md", "GROK.md global" ou "contexto global", leia este arquivo + SESSION_CONTEXT.md + docs/ relevantes do projeto.
+Arquivo principal para Grok (xAI). Sempre que eu mencionar "use GROK.md", "GROK.md global" ou "contexto global", leia este arquivo + `ARCHITECTURE.md` + `SESSION_CONTEXT.md` + docs/ relevantes do projeto.
 
 ## Quem sou eu
 
@@ -45,13 +45,23 @@ Arquivo principal para Grok (xAI). Sempre que eu mencionar "use GROK.md", "GROK.
 5. **Cleanup + Documentação** (TASK_LOGS, remova console.log, etc.).
 6. **Commit granular** seguindo convenções do projeto.
 
+## Documentos de arquitetura (SDD)
+
+- `ARCHITECTURE.md` → Visão geral da arquitetura (ponto de entrada principal)
+- `ONBOARDING_FRONTEND.md` → Detalhamento profundo do frontend
+- `INVENTARIO_REPOS.md` → Mapa dos 99 repositórios
+- `docs/adr/` → Architecture Decision Records
+
+Sempre que a tarefa envolver arquitetura, decisões técnicas ou entendimento do sistema, leia o `ARCHITECTURE.md` primeiro.
+
 ## Como usar o Grok de forma eficiente
 
-- "use GROK.md" → recarrega contexto global.
-- "recon da [task/arquivo]" → faça mapeamento completo.
-- "plano para PBI-XXXX" → gere plano antes de qualquer código.
-- "review" → code review focado (arquitetura, padrões, performance, etc.).
-- "atualize GROK.md" → sugira melhorias neste arquivo.
+- `"use GROK.md"` → recarrega contexto global
+- `"use GROK.md + ARCHITECTURE.md"` → contexto completo de arquitetura
+- `"recon da [task/arquivo]"` → faça mapeamento completo
+- `"plano para PBI-XXXX"` → gere plano antes de qualquer código
+- `"review"` → code review focado (arquitetura, padrões, performance, etc.)
+- `"atualize GROK.md"` → sugira melhorias neste arquivo
 
 ## O que NUNCA fazer
 
@@ -62,5 +72,3 @@ Arquivo principal para Grok (xAI). Sempre que eu mencionar "use GROK.md", "GROK.
 - Rodar comandos destrutivos sem confirmação explícita.
 
 Este arquivo é vivo. Quando notar padrões repetidos que posso melhorar, sugira a atualização.
-
----

@@ -2,22 +2,22 @@
 
 Repositório pessoal de **Filipe** para o projeto **FTD Aceleração Iônica V3**.
 
-Este repositório funciona como um **Living SDD** (Documentação de Arquitetura Viva) + base de conhecimento técnica do frontend e integração com o ecossistema completo (BFFs, microsserviços, onboarding, etc.).
+Este é um **Living SDD** (Documentação de Arquitetura Viva) + base de conhecimento técnica do frontend, com evolução gradual para visão fim-a-fim (BFFs, integrações e backend).
 
 ## Objetivos
 
 - Servir como **referência técnica principal** do projeto
-- Acelerar meu dia a dia (reconhecimento rápido, decisões, padrões)
+- Acelerar meu dia a dia (reconhecimento, decisões arquiteturais e produtividade)
 - Facilitar onboarding de novos desenvolvedores frontend
-- Registrar decisões arquiteturais importantes (ADRs)
-- Ser a ponte entre Frontend e Backend (contratos, integrações, event-driven)
+- Registrar decisões técnicas importantes (ADRs)
+- Funcionar como ponte entre Frontend e o ecossistema backend (BFFs, EventHub, Onboarding V2)
 
 ## Como usar este repositório
 
 **Para Grok (xAI):**
 
-- `use GROK.md` → carrega contexto global
-- `use GROK.md + ARCHITECTURE.md` → contexto completo de arquitetura
+- `"use GROK.md"` → carrega contexto global
+- `"use GROK.md + ARCHITECTURE.md"` → contexto completo de arquitetura
 
 **Para Claude:**
 
@@ -25,32 +25,35 @@ Este repositório funciona como um **Living SDD** (Documentação de Arquitetura
 
 **Documentos principais:**
 
-- `ARCHITECTURE.md` → Visão geral da arquitetura (C4 Model, componentes, integrações)
-- `GROK.md` / `CLAUDE.md` → Diretrizes de trabalho com cada AI
-- `docs/adr/` → Architecture Decision Records (decisões técnicas importantes)
-- `INVENTARIO_REPOS.md` → Mapa completo dos 99 repositórios do projeto
+- `ARCHITECTURE.md` → Visão geral da arquitetura (C4 Model, componentes, fluxos)
+- `GROK.md` / `CLAUDE.md` → Diretrizes de interação com cada AI
+- `docs/adr/` → Architecture Decision Records
+- `INVENTARIO_REPOS.md` → Inventário completo dos 99 repositórios
 - `TASK_LOGS/` → Registro de PBIs e lições aprendidas
 - `SESSION_CONTEXT.md` → Contexto da sessão atual
 
 ## Estrutura do Repositório
 
-- `/` → Arquivos raiz (README, GROK.md, ARCHITECTURE.md...)
-- `docs/` → Convenções, padrões, workflows
-- `docs/adr/` → Decisões arquiteturais
+- `/` → Arquivos raiz e documentos centrais
+- `docs/` → Convenções, padrões, workflows e ADRs
 - `backend/` → Integração com BFFs, contratos e microsserviços
-- `diagrams/` → Diagramas C4 e visuais
-- `TASK_LOGS/` + `drafts/` → Execução e registro
+- `diagrams/` → Diagramas C4 Model e outros visuais
+- `TASK_LOGS/` + `drafts/` → Execução e rascunhos
 
 ---
 
-**Quer que eu ajuste mais alguma coisa no README?**
+**Este README está pronto para commit.** Pode colar direto.
 
-Ou prefere que eu gere agora o **`ARCHITECTURE.md`** (o documento mais importante do SDD)?
+---
 
-Diga o próximo passo:
+### 2. ARCHITECTURE.md (versão inicial)
 
-- “melhora mais o README”
-- “gera ARCHITECTURE.md”
-- “vamos para os ADRs”
+Vou gerar ele agora. Como é grande, vou entregar em uma versão boa e estruturada.
 
-Estou alinhado com você.
+**Quer que eu gere o `ARCHITECTURE.md` completo agora?**
+
+Diga **"gera ARCHITECTURE.md"** que eu entrego o conteúdo inteiro pronto para você adicionar no repo.
+
+(É um documento mais denso, com seções de C4 Model, frontend architecture, integração, etc.)
+
+Pode falar!

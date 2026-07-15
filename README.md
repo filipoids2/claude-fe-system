@@ -2,45 +2,55 @@
 
 Repositório pessoal de **Filipe** para o projeto **FTD Aceleração Iônica V3**.
 
-Este é um **Living SDD** (documentação de arquitetura viva) + base de conhecimento técnica do frontend (e progressivamente do sistema completo).
+Este repositório funciona como um **Living SDD** (Documentação de Arquitetura Viva) + base de conhecimento técnica do frontend e integração com o ecossistema completo (BFFs, microsserviços, onboarding, etc.).
 
 ## Objetivos
 
-- Ser a **referência técnica principal** do projeto
-- Acelerar meu dia a dia (reconhecimento rápido, padrões, decisões)
-- Facilitar onboarding de novos devs frontend
-- Registrar decisões arquiteturais (ADRs)
-- Servir como ponte entre Frontend e Backend (BFFs, integração, contratos)
+- Servir como **referência técnica principal** do projeto
+- Acelerar meu dia a dia (reconhecimento rápido, decisões, padrões)
+- Facilitar onboarding de novos desenvolvedores frontend
+- Registrar decisões arquiteturais importantes (ADRs)
+- Ser a ponte entre Frontend e Backend (contratos, integrações, event-driven)
 
 ## Como usar este repositório
 
-- **GROK.md** → Contexto global para Grok (xAI)
-- **CLAUDE.md** → Contexto global para Claude
-- **ARCHITECTURE.md** → Visão geral da arquitetura (este é o documento central)
-- **docs/adr/** → Architecture Decision Records (decisões importantes)
-- **SESSION_CONTEXT.md** → Contexto da sessão atual
-- **TASK_LOGS/** → Registro de PBIs entregues
-- **INVENTARIO_REPOS.md** → Mapa completo dos 99 repositórios do projeto
+**Para Grok (xAI):**
 
-**Comando rápido para Grok:**
+- `use GROK.md` → carrega contexto global
+- `use GROK.md + ARCHITECTURE.md` → contexto completo de arquitetura
 
-- "use GROK.md + ARCHITECTURE.md" → carrega contexto completo
+**Para Claude:**
 
-## Estrutura do Projeto
+- Use o `CLAUDE.md` global
 
-- `ARCHITECTURE.md` → Documento principal (C4 Model, visão geral)
-- `docs/` → Convenções, padrões, ADRs
-- `backend/` → Integração com BFFs e microsserviços (em construção)
-- `diagrams/` → Diagramas C4 e outros
+**Documentos principais:**
+
+- `ARCHITECTURE.md` → Visão geral da arquitetura (C4 Model, componentes, integrações)
+- `GROK.md` / `CLAUDE.md` → Diretrizes de trabalho com cada AI
+- `docs/adr/` → Architecture Decision Records (decisões técnicas importantes)
+- `INVENTARIO_REPOS.md` → Mapa completo dos 99 repositórios do projeto
+- `TASK_LOGS/` → Registro de PBIs e lições aprendidas
+- `SESSION_CONTEXT.md` → Contexto da sessão atual
+
+## Estrutura do Repositório
+
+- `/` → Arquivos raiz (README, GROK.md, ARCHITECTURE.md...)
+- `docs/` → Convenções, padrões, workflows
+- `docs/adr/` → Decisões arquiteturais
+- `backend/` → Integração com BFFs, contratos e microsserviços
+- `diagrams/` → Diagramas C4 e visuais
+- `TASK_LOGS/` + `drafts/` → Execução e registro
 
 ---
 
-**Quer que eu gere agora o `ARCHITECTURE.md` completo (com foco forte em Frontend + visão geral do sistema)?**
+**Quer que eu ajuste mais alguma coisa no README?**
 
-É um documento maior, mas muito útil. Posso entregar em partes se preferir.
+Ou prefere que eu gere agora o **`ARCHITECTURE.md`** (o documento mais importante do SDD)?
 
-Diga **"gera ARCHITECTURE.md"** que eu começo.
+Diga o próximo passo:
 
-Ou se quiser ajustar o README primeiro, é só falar.
+- “melhora mais o README”
+- “gera ARCHITECTURE.md”
+- “vamos para os ADRs”
 
-Estou pronto. Vamos construir isso passo a passo. 🚀
+Estou alinhado com você.

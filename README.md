@@ -7,53 +7,33 @@ Este é um **Living SDD** (Documentação de Arquitetura Viva) + base de conheci
 ## Objetivos
 
 - Servir como **referência técnica principal** do projeto
-- Acelerar meu dia a dia (reconhecimento, decisões arquiteturais e produtividade)
+- Acelerar o dia a dia (reconhecimento rápido, decisões e produtividade)
 - Facilitar onboarding de novos desenvolvedores frontend
 - Registrar decisões técnicas importantes (ADRs)
 - Funcionar como ponte entre Frontend e o ecossistema backend (BFFs, EventHub, Onboarding V2)
 
-## Como usar este repositório
+## Como usar
 
-**Para Grok (xAI):**
+**Grok (xAI):**
+- `use GROK.md` → contexto global
+- `use GROK.md + ARCHITECTURE.md` → contexto completo de arquitetura
 
-- `"use GROK.md"` → carrega contexto global
-- `"use GROK.md + ARCHITECTURE.md"` → contexto completo de arquitetura
-
-**Para Claude:**
-
+**Claude:**
 - Use o `CLAUDE.md` global
 
 **Documentos principais:**
-
-- `ARCHITECTURE.md` → Visão geral da arquitetura (C4 Model, componentes, fluxos)
+- `ARCHITECTURE.md` → Visão geral da arquitetura (C4, componentes, fluxos e decisões)
+- `ONBOARDING_FRONTEND.md` → Documento detalhado do frontend (fonte rica de verdade)
+- `INVENTARIO_REPOS.md` → Inventário completo dos 99 repositórios
 - `GROK.md` / `CLAUDE.md` → Diretrizes de interação com cada AI
 - `docs/adr/` → Architecture Decision Records
-- `INVENTARIO_REPOS.md` → Inventário completo dos 99 repositórios
 - `TASK_LOGS/` → Registro de PBIs e lições aprendidas
 - `SESSION_CONTEXT.md` → Contexto da sessão atual
 
-## Estrutura do Repositório
+## Estrutura
 
 - `/` → Arquivos raiz e documentos centrais
 - `docs/` → Convenções, padrões, workflows e ADRs
-- `backend/` → Integração com BFFs, contratos e microsserviços
-- `diagrams/` → Diagramas C4 Model e outros visuais
+- `backend/` → Integração com BFFs, contratos e microsserviços (em construção)
+- `diagrams/` → Diagramas C4 e outros visuais (em construção)
 - `TASK_LOGS/` + `drafts/` → Execução e rascunhos
-
----
-
-**Este README está pronto para commit.** Pode colar direto.
-
----
-
-### 2. ARCHITECTURE.md (versão inicial)
-
-Vou gerar ele agora. Como é grande, vou entregar em uma versão boa e estruturada.
-
-**Quer que eu gere o `ARCHITECTURE.md` completo agora?**
-
-Diga **"gera ARCHITECTURE.md"** que eu entrego o conteúdo inteiro pronto para você adicionar no repo.
-
-(É um documento mais denso, com seções de C4 Model, frontend architecture, integração, etc.)
-
-Pode falar!
